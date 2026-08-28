@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Panel - Moj Web</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #0f0f12;
+            color: white;
+        }
+
+        header {
+            background: #18181d;
+            padding: 25px;
+            text-align: center;
+            border-bottom: 2px solid #292930;
+        }
+
+        header h1 {
+            font-size: 30px;
+        }
+
+        header p {
+            color: #aaa;
+            margin-top: 8px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+            padding: 30px 20px;
+        }
+
+        .panel {
+            background: #19191f;
+            border: 1px solid #292930;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+
+        .panel h2 {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 7px;
+            color: #ccc;
+            font-weight: bold;
+        }
+
+        input,
+        textarea,
+        select {
+            width: 100%;
+            padding: 13px;
+            margin-bottom: 18px;
+            border: 1px solid #33333b;
+            border-radius: 8px;
+            background: #101014;
+            color: white;
+            font-size: 15px;
+        }
+
+        textarea {
+            min-height: 130px;
+            resize: vertical;
+        }
+
+        button {
+            border: none;
+            border-radius: 8px;
+            padding: 13px 20px;
+            background: #ff3333;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #e52222;
+        }
+
+        .secondary {
+            background: #303038;
+            margin-left: 8px;
+        }
+
+        .secondary:hover {
+            background: #41414b;
+        }
+
+        .info {
+            background: #202027;
+            border-radius: 10px;
+            padding: 15px;
+            color: #aaa;
+            line-height: 1.5;
+        }
+
+        .video-box {
+            border: 1px solid #33333b;
+            border-radius: 10px;
+            padding: 18px;
+            margin-top: 15px;
+            background: #111116;
+        }
+
+        .video-box h3 {
+            margin-bottom: 8px;
+        }
+
+        .video-box p {
+            color: #aaa;
+            margin-bottom: 12px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #777;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>⚙️ Admin Panel</h1>
+    <p>Upravljanje mojom web stranicom</p>
+</header>
+
+<div class="container">
+
+    <div class="panel">
+        <h2>🌐 Postavke web stranice</h2>
+
+        <label>Naslov web stranice</label>
+        <input
+            type="text"
+            id="siteTitle"
+            placeholder="Npr. MrDino223 YT">
+
+        <label>Opis web stranice</label>
+        <textarea
+            id="siteDescription"
+            placeholder="Npr. Roblox igre, tutoriali, gameplay i zabavni videi"></textarea>
+
+        <button onclick="saveSettings()">
+            💾 Spremi postavke
+        </button>
+    </div>
+
+
+    <div class="panel">
+
+        <h2>🎬 Dodaj novi video</h2>
+
+        <label>Naslov videa</label>
+        <input
+            type="text"
+            id="videoTitle"
+            placeholder="Npr. Kako napraviti Roblox leaderboard">
+
+        <label>YouTube link</label>
+        <input
+            type="text"
+            id="videoLink"
+            placeholder="https://www.youtube.com/watch?v=...">
+
+        <label>Thumbnail link</label>
+        <input
+            type="text"
+            id="videoThumbnail"
+            placeholder="Link slike za thumbnail">
+
+        <label>Opis videa</label>
+        <textarea
+            id="videoDescription"
+            placeholder="O čemu je ovaj video?"></textarea>
+
+        <label>Skripta</label>
+        <textarea
+            id="videoScript"
+            placeholder="Ovdje možeš staviti Roblox Studio skriptu..."></textarea>
+
+        <label>Koraci / važne stvari</label>
+        <textarea
+            id="videoSteps"
+            placeholder="1. Napravi Part&#10;2. Dodaj Script&#10;3. Zalijepi skriptu..."></textarea>
+
+        <button onclick="addVideo()">
+            ➕ Dodaj video
+        </button>
+
+        <button class="secondary" onclick="clearForm()">
+            🗑️ Očisti
+        </button>
+
+    </div>
+
+
+    <div class="panel">
+
+        <h2>📹 Moji videi</h2>
+
+        <div id="videoList">
+
+            <div class="video-box">
+
+                <h3>🔧 Roblox Studio Tutorial</h3>
+
+                <p>
+                    Ovo je primjer videa.
+                </p>
+
+                <button class="secondary">
+                    ✏️ Uredi
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="panel">
+
+        <h2>ℹ️ Kako će ovo raditi?</h2>
+
+        <div class="info">
+            Ovdje ćeš kasnije moći upravljati cijelom web stranicom.
+            <br><br>
+
+            ✅ Dodavanje videa<br>
+            ✅ Uređivanje videa<br>
+            ✅ Brisanje videa<br>
+            ✅ YouTube link<br>
+            ✅ Thumbnail<br>
+            ✅ Opis videa<br>
+            ✅ Roblox skripte<br>
+            ✅ Koraci za tutorial<br>
+            ✅ Promjena naslova web stranice
+        </div>
+
+    </div>
+
+</div>
+
+<footer>
+    Admin Panel • Moj Web
+</footer>
+
+
+<script>
+
+function saveSettings() {
+
+    const title =
+        document.getElementById("siteTitle").value;
+
+    const description =
+        document.getElementById("siteDescription").value;
+
+    if (title === "") {
+        alert("Upiši naslov web stranice!");
+        return;
+    }
+
+    localStorage.setItem("siteTitle", title);
+    localStorage.setItem("siteDescription", description);
+
+    alert("Postavke su spremljene!");
+}
+
+
+function addVideo() {
+
+    const title =
+        document.getElementById("videoTitle").value;
+
+    const link =
+        document.getElementById("videoLink").value;
+
+    const thumbnail =
+        document.getElementById("videoThumbnail").value;
+
+    const description =
+        document.getElementById("videoDescription").value;
+
+    const script =
+        document.getElementById("videoScript").value;
+
+    const steps =
+        document.getElementById("videoSteps").value;
+
+
+    if (title === "" || link === "") {
+        alert("Upiši barem naslov i YouTube link!");
+        return;
+    }
+
+
+    const video = {
+        title: title,
+        link: link,
+        thumbnail: thumbnail,
+        description: description,
+        script: script,
+        steps: steps
+    };
+
+
+    let videos =
+        JSON.parse(localStorage.getItem("videos")) || [];
+
+    videos.push(video);
+
+    localStorage.setItem(
+        "videos",
+        JSON.stringify(videos)
+    );
+
+
+    alert("Video je dodan!");
+
+    clearForm();
+
+    loadVideos();
+}
+
+
+function clearForm() {
+
+    document.getElementById("videoTitle").value = "";
+    document.getElementById("videoLink").value = "";
+    document.getElementById("videoThumbnail").value = "";
+    document.getElementById("videoDescription").value = "";
+    document.getElementById("videoScript").value = "";
+    document.getElementById("videoSteps").value = "";
+}
+
+
+function loadVideos() {
+
+    const list =
+        document.getElementById("videoList");
+
+    const videos =
+        JSON.parse(localStorage.getItem("videos")) || [];
+
+    if (videos.length === 0) {
+        return;
+    }
+
+    list.innerHTML = "";
+
+    videos.forEach(function(video, index) {
+
+        const box =
+            document.createElement("div");
+
+        box.className = "video-box";
+
+        box.innerHTML = `
+            <h3>🎬 ${video.title}</h3>
+
+            <p>${video.description}</p>
+
+            <button
+                class="secondary"
+                onclick="deleteVideo(${index})">
+                🗑️ Obriši
+            </button>
+        `;
+
+        list.appendChild(box);
+    });
+}
+
+
+function deleteVideo(index) {
+
+    let videos =
+        JSON.parse(localStorage.getItem("videos")) || [];
+
+    videos.splice(index, 1);
+
+    localStorage.setItem(
+        "videos",
+        JSON.stringify(videos)
+    );
+
+    loadVideos();
+}
+
+
+window.onload = function() {
+
+    document.getElementById("siteTitle").value =
+        localStorage.getItem("siteTitle") || "";
+
+    document.getElementById("siteDescription").value =
+        localStorage.getItem("siteDescription") || "";
+
+    loadVideos();
+};
+
+</script>
+
+</body>
+</html>
