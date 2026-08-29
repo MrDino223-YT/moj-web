@@ -61,8 +61,7 @@
         }
 
         input,
-        textarea,
-        select {
+        textarea {
             width: 100%;
             padding: 13px;
             margin-bottom: 18px;
@@ -74,7 +73,7 @@
         }
 
         textarea {
-            min-height: 130px;
+            min-height: 120px;
             resize: vertical;
         }
 
@@ -87,6 +86,8 @@
             font-size: 16px;
             font-weight: bold;
             cursor: pointer;
+            margin-right: 8px;
+            margin-bottom: 8px;
         }
 
         button:hover {
@@ -95,19 +96,30 @@
 
         .secondary {
             background: #303038;
-            margin-left: 8px;
         }
 
         .secondary:hover {
             background: #41414b;
         }
 
-        .info {
+        .danger {
+            background: #8b1e1e;
+        }
+
+        .danger:hover {
+            background: #b52525;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .message {
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 8px;
             background: #202027;
-            border-radius: 10px;
-            padding: 15px;
             color: #aaa;
-            line-height: 1.5;
         }
 
         .video-box {
@@ -125,6 +137,27 @@
         .video-box p {
             color: #aaa;
             margin-bottom: 12px;
+            line-height: 1.5;
+        }
+
+        .login-box {
+            max-width: 500px;
+            margin: 70px auto;
+            padding: 30px;
+            background: #19191f;
+            border: 1px solid #292930;
+            border-radius: 15px;
+        }
+
+        .login-box h1 {
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .login-box p {
+            color: #aaa;
+            text-align: center;
+            margin-bottom: 25px;
         }
 
         footer {
@@ -137,99 +170,155 @@
 
 <body>
 
-<header>
-    <h1>⚙️ Admin Panel</h1>
-    <p>Upravljanje mojom web stranicom</p>
-</header>
+<!-- LOGIN -->
 
-<div class="container">
+<div id="loginScreen">
 
-    <div class="panel">
-        <h2>🌐 Postavke web stranice</h2>
+    <div class="login-box">
 
-        <label>Naslov web stranice</label>
+        <h1>🔐 Admin Login</h1>
+
+        <p>Prijavi se u svoj Moj Web admin panel.</p>
+
+        <label>Email</label>
         <input
-            type="text"
-            id="siteTitle"
-            placeholder="Npr. MrDino223 YT">
+            type="email"
+            id="email"
+            placeholder="Tvoj email">
 
-        <label>Opis web stranice</label>
-        <textarea
-            id="siteDescription"
-            placeholder="Npr. Roblox igre, tutoriali, gameplay i zabavni videi"></textarea>
-
-        <button onclick="saveSettings()">
-            💾 Spremi postavke
-        </button>
-    </div>
-
-
-    <div class="panel">
-
-        <h2>🎬 Dodaj novi video</h2>
-
-        <label>Naslov videa</label>
+        <label>Lozinka</label>
         <input
-            type="text"
-            id="videoTitle"
-            placeholder="Npr. Kako napraviti Roblox leaderboard">
+            type="password"
+            id="password"
+            placeholder="Tvoja lozinka">
 
-        <label>YouTube link</label>
-        <input
-            type="text"
-            id="videoLink"
-            placeholder="https://www.youtube.com/watch?v=...">
-
-        <label>Thumbnail link</label>
-        <input
-            type="text"
-            id="videoThumbnail"
-            placeholder="Link slike za thumbnail">
-
-        <label>Opis videa</label>
-        <textarea
-            id="videoDescription"
-            placeholder="O čemu je ovaj video?"></textarea>
-
-        <label>Skripta</label>
-        <textarea
-            id="videoScript"
-            placeholder="Ovdje možeš staviti Roblox Studio skriptu..."></textarea>
-
-        <label>Koraci / važne stvari</label>
-        <textarea
-            id="videoSteps"
-            placeholder="1. Napravi Part&#10;2. Dodaj Script&#10;3. Zalijepi skriptu..."></textarea>
-
-        <button onclick="addVideo()">
-            ➕ Dodaj video
+        <button onclick="login()">
+            🔑 Prijava
         </button>
 
-        <button class="secondary" onclick="clearForm()">
-            🗑️ Očisti
-        </button>
+        <div id="loginMessage" class="message"></div>
 
     </div>
 
+</div>
 
-    <div class="panel">
 
-        <h2>📹 Moji videi</h2>
+<!-- ADMIN PANEL -->
 
-        <div id="videoList">
+<div id="adminScreen" class="hidden">
 
-            <div class="video-box">
+    <header>
 
-                <h3>🔧 Roblox Studio Tutorial</h3>
+        <h1>⚙️ Admin Panel</h1>
 
-                <p>
-                    Ovo je primjer videa.
-                </p>
+        <p>Upravljanje mojom web stranicom</p>
 
-                <button class="secondary">
-                    ✏️ Uredi
-                </button>
+        <br>
 
+        <button class="secondary" onclick="logout()">
+            🚪 Odjava
+        </button>
+
+    </header>
+
+
+    <div class="container">
+
+
+        <!-- SETTINGS -->
+
+        <div class="panel">
+
+            <h2>🌐 Postavke web stranice</h2>
+
+            <label>Naslov web stranice</label>
+
+            <input
+                type="text"
+                id="siteTitle"
+                placeholder="Moj Web">
+
+            <label>Opis web stranice</label>
+
+            <textarea
+                id="siteDescription"
+                placeholder="Roblox gaming i još mnogo toga."></textarea>
+
+            <button onclick="saveSettings()">
+                💾 Spremi postavke
+            </button>
+
+            <div id="settingsMessage" class="message"></div>
+
+        </div>
+
+
+        <!-- ADD VIDEO -->
+
+        <div class="panel">
+
+            <h2>🎬 Dodaj novi video</h2>
+
+            <label>Naslov videa</label>
+
+            <input
+                type="text"
+                id="videoTitle"
+                placeholder="Npr. Roblox Studio Tutorial">
+
+            <label>YouTube link</label>
+
+            <input
+                type="text"
+                id="videoLink"
+                placeholder="https://www.youtube.com/watch?v=...">
+
+            <label>Thumbnail link</label>
+
+            <input
+                type="text"
+                id="videoThumbnail"
+                placeholder="https://...">
+
+            <label>Opis videa</label>
+
+            <textarea
+                id="videoDescription"
+                placeholder="Opis videa"></textarea>
+
+            <label>Roblox skripta</label>
+
+            <textarea
+                id="videoScript"
+                placeholder="Ovdje stavi Roblox skriptu..."></textarea>
+
+            <label>Koraci</label>
+
+            <textarea
+                id="videoSteps"
+                placeholder="1. Otvori Roblox Studio&#10;2. Napravi Part&#10;3. Dodaj Script"></textarea>
+
+            <button onclick="addVideo()">
+                ➕ Dodaj video
+            </button>
+
+            <button class="secondary" onclick="clearForm()">
+                🗑️ Očisti
+            </button>
+
+            <div id="videoMessage" class="message"></div>
+
+        </div>
+
+
+        <!-- VIDEOS -->
+
+        <div class="panel">
+
+            <h2>📹 Moji videi</h2>
+
+            <div id="videoList">
+                Učitavanje...
             </div>
 
         </div>
@@ -237,187 +326,448 @@
     </div>
 
 
-    <div class="panel">
-
-        <h2>ℹ️ Kako će ovo raditi?</h2>
-
-        <div class="info">
-            Ovdje ćeš kasnije moći upravljati cijelom web stranicom.
-            <br><br>
-
-            ✅ Dodavanje videa<br>
-            ✅ Uređivanje videa<br>
-            ✅ Brisanje videa<br>
-            ✅ YouTube link<br>
-            ✅ Thumbnail<br>
-            ✅ Opis videa<br>
-            ✅ Roblox skripte<br>
-            ✅ Koraci za tutorial<br>
-            ✅ Promjena naslova web stranice
-        </div>
-
-    </div>
+    <footer>
+        Admin Panel • Moj Web
+    </footer>
 
 </div>
 
-<footer>
-    Admin Panel • Moj Web
-</footer>
 
+<!-- FIREBASE -->
 
-<script>
+<script type="module">
 
-function saveSettings() {
+    import { initializeApp }
+        from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
 
-    const title =
-        document.getElementById("siteTitle").value;
-
-    const description =
-        document.getElementById("siteDescription").value;
-
-    if (title === "") {
-        alert("Upiši naslov web stranice!");
-        return;
+    import {
+        getAuth,
+        signInWithEmailAndPassword,
+        onAuthStateChanged,
+        signOut
     }
+    from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
 
-    localStorage.setItem("siteTitle", title);
-    localStorage.setItem("siteDescription", description);
-
-    alert("Postavke su spremljene!");
-}
-
-
-function addVideo() {
-
-    const title =
-        document.getElementById("videoTitle").value;
-
-    const link =
-        document.getElementById("videoLink").value;
-
-    const thumbnail =
-        document.getElementById("videoThumbnail").value;
-
-    const description =
-        document.getElementById("videoDescription").value;
-
-    const script =
-        document.getElementById("videoScript").value;
-
-    const steps =
-        document.getElementById("videoSteps").value;
-
-
-    if (title === "" || link === "") {
-        alert("Upiši barem naslov i YouTube link!");
-        return;
+    import {
+        getFirestore,
+        collection,
+        addDoc,
+        deleteDoc,
+        doc,
+        setDoc,
+        getDoc,
+        onSnapshot
     }
+    from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
 
-    const video = {
-        title: title,
-        link: link,
-        thumbnail: thumbnail,
-        description: description,
-        script: script,
-        steps: steps
+    // ==========================================
+    // FIREBASE CONFIG
+    // ==========================================
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyAP2yePMtk2SlQju1cHGc3jhMiq42Mzxdo",
+        authDomain: "moj-web-ec4c7.firebaseapp.com",
+        projectId: "moj-web-ec4c7",
+        storageBucket: "moj-web-ec4c7.firebasestorage.app",
+        messagingSenderId: "341511464392",
+        appId: "1:341511464392:web:4aa2988f8aa61f257c8cfd"
     };
 
 
-    let videos =
-        JSON.parse(localStorage.getItem("videos")) || [];
+    // ==========================================
+    // START FIREBASE
+    // ==========================================
 
-    videos.push(video);
+    const app = initializeApp(firebaseConfig);
 
-    localStorage.setItem(
-        "videos",
-        JSON.stringify(videos)
-    );
+    const auth = getAuth(app);
 
-
-    alert("Video je dodan!");
-
-    clearForm();
-
-    loadVideos();
-}
+    const db = getFirestore(app);
 
 
-function clearForm() {
+    // ==========================================
+    // LOGIN
+    // ==========================================
 
-    document.getElementById("videoTitle").value = "";
-    document.getElementById("videoLink").value = "";
-    document.getElementById("videoThumbnail").value = "";
-    document.getElementById("videoDescription").value = "";
-    document.getElementById("videoScript").value = "";
-    document.getElementById("videoSteps").value = "";
-}
+    window.login = async function() {
+
+        const email =
+            document.getElementById("email").value.trim();
+
+        const password =
+            document.getElementById("password").value;
+
+        const message =
+            document.getElementById("loginMessage");
 
 
-function loadVideos() {
+        if (!email || !password) {
 
-    const list =
-        document.getElementById("videoList");
+            message.textContent =
+                "Upiši email i lozinku.";
 
-    const videos =
-        JSON.parse(localStorage.getItem("videos")) || [];
+            return;
+        }
 
-    if (videos.length === 0) {
-        return;
+
+        try {
+
+            await signInWithEmailAndPassword(
+                auth,
+                email,
+                password
+            );
+
+            message.textContent =
+                "Prijava uspješna!";
+
+        } catch (error) {
+
+            console.error(error);
+
+            message.textContent =
+                "Greška: " + error.message;
+        }
+    };
+
+
+    // ==========================================
+    // LOGOUT
+    // ==========================================
+
+    window.logout = async function() {
+
+        await signOut(auth);
+
+    };
+
+
+    // ==========================================
+    // AUTH STATE
+    // ==========================================
+
+    onAuthStateChanged(auth, async function(user) {
+
+        const loginScreen =
+            document.getElementById("loginScreen");
+
+        const adminScreen =
+            document.getElementById("adminScreen");
+
+
+        if (user) {
+
+            loginScreen.classList.add("hidden");
+
+            adminScreen.classList.remove("hidden");
+
+            loadSettings();
+
+            loadVideos();
+
+        } else {
+
+            loginScreen.classList.remove("hidden");
+
+            adminScreen.classList.add("hidden");
+
+        }
+
+    });
+
+
+    // ==========================================
+    // SAVE SETTINGS
+    // ==========================================
+
+    window.saveSettings = async function() {
+
+        const title =
+            document.getElementById("siteTitle").value.trim();
+
+        const description =
+            document.getElementById("siteDescription").value.trim();
+
+        const message =
+            document.getElementById("settingsMessage");
+
+
+        if (!title) {
+
+            message.textContent =
+                "Upiši naslov web stranice!";
+
+            return;
+        }
+
+
+        try {
+
+            await setDoc(
+                doc(db, "settings", "website"),
+                {
+                    title: title,
+                    description: description
+                }
+            );
+
+
+            message.textContent =
+                "✅ Postavke su spremljene!";
+
+        } catch (error) {
+
+            console.error(error);
+
+            message.textContent =
+                "❌ Greška pri spremanju: " +
+                error.message;
+        }
+    };
+
+
+    // ==========================================
+    // LOAD SETTINGS
+    // ==========================================
+
+    async function loadSettings() {
+
+        try {
+
+            const settingsRef =
+                doc(db, "settings", "website");
+
+            const settingsSnap =
+                await getDoc(settingsRef);
+
+
+            if (settingsSnap.exists()) {
+
+                const data =
+                    settingsSnap.data();
+
+                document.getElementById("siteTitle").value =
+                    data.title || "";
+
+                document.getElementById("siteDescription").value =
+                    data.description || "";
+            }
+
+        } catch (error) {
+
+            console.error(error);
+        }
     }
 
-    list.innerHTML = "";
 
-    videos.forEach(function(video, index) {
+    // ==========================================
+    // ADD VIDEO
+    // ==========================================
 
-        const box =
+    window.addVideo = async function() {
+
+        const title =
+            document.getElementById("videoTitle").value.trim();
+
+        const link =
+            document.getElementById("videoLink").value.trim();
+
+        const thumbnail =
+            document.getElementById("videoThumbnail").value.trim();
+
+        const description =
+            document.getElementById("videoDescription").value.trim();
+
+        const script =
+            document.getElementById("videoScript").value;
+
+        const steps =
+            document.getElementById("videoSteps").value;
+
+
+        const message =
+            document.getElementById("videoMessage");
+
+
+        if (!title || !link) {
+
+            message.textContent =
+                "❌ Upiši naslov i YouTube link.";
+
+            return;
+        }
+
+
+        try {
+
+            await addDoc(
+                collection(db, "videos"),
+                {
+                    title: title,
+                    link: link,
+                    thumbnail: thumbnail,
+                    description: description,
+                    script: script,
+                    steps: steps,
+                    createdAt: Date.now()
+                }
+            );
+
+
+            message.textContent =
+                "✅ Video je dodan!";
+
+            clearForm();
+
+        } catch (error) {
+
+            console.error(error);
+
+            message.textContent =
+                "❌ Greška: " + error.message;
+        }
+
+    };
+
+
+    // ==========================================
+    // CLEAR FORM
+    // ==========================================
+
+    window.clearForm = function() {
+
+        document.getElementById("videoTitle").value = "";
+
+        document.getElementById("videoLink").value = "";
+
+        document.getElementById("videoThumbnail").value = "";
+
+        document.getElementById("videoDescription").value = "";
+
+        document.getElementById("videoScript").value = "";
+
+        document.getElementById("videoSteps").value = "";
+
+    };
+
+
+    // ==========================================
+    // LOAD VIDEOS
+    // ==========================================
+
+    function loadVideos() {
+
+        const list =
+            document.getElementById("videoList");
+
+
+        onSnapshot(
+            collection(db, "videos"),
+            function(snapshot) {
+
+                list.innerHTML = "";
+
+
+                if (snapshot.empty) {
+
+                    list.innerHTML =
+                        "<p>Nema videa.</p>";
+
+                    return;
+                }
+
+
+                snapshot.forEach(function(videoDoc) {
+
+                    const video =
+                        videoDoc.data();
+
+                    const id =
+                        videoDoc.id;
+
+
+                    const box =
+                        document.createElement("div");
+
+                    box.className =
+                        "video-box";
+
+
+                    box.innerHTML = `
+
+                        <h3>
+                            🎬 ${escapeHtml(video.title || "")}
+                        </h3>
+
+                        <p>
+                            ${escapeHtml(video.description || "")}
+                        </p>
+
+                        <button
+                            class="danger"
+                            onclick="deleteVideo('${id}')">
+
+                            🗑️ Obriši
+
+                        </button>
+
+                    `;
+
+
+                    list.appendChild(box);
+
+                });
+
+            }
+        );
+
+    }
+
+
+    // ==========================================
+    // DELETE VIDEO
+    // ==========================================
+
+    window.deleteVideo = async function(id) {
+
+        if (!confirm("Želiš li obrisati ovaj video?")) {
+            return;
+        }
+
+
+        try {
+
+            await deleteDoc(
+                doc(db, "videos", id)
+            );
+
+        } catch (error) {
+
+            alert(
+                "Greška: " + error.message
+            );
+
+        }
+
+    };
+
+
+    // ==========================================
+    // SECURITY FOR DISPLAYED TEXT
+    // ==========================================
+
+    function escapeHtml(text) {
+
+        const div =
             document.createElement("div");
 
-        box.className = "video-box";
+        div.textContent =
+            text;
 
-        box.innerHTML = `
-            <h3>🎬 ${video.title}</h3>
+        return div.innerHTML;
 
-            <p>${video.description}</p>
-
-            <button
-                class="secondary"
-                onclick="deleteVideo(${index})">
-                🗑️ Obriši
-            </button>
-        `;
-
-        list.appendChild(box);
-    });
-}
-
-
-function deleteVideo(index) {
-
-    let videos =
-        JSON.parse(localStorage.getItem("videos")) || [];
-
-    videos.splice(index, 1);
-
-    localStorage.setItem(
-        "videos",
-        JSON.stringify(videos)
-    );
-
-    loadVideos();
-}
-
-
-window.onload = function() {
-
-    document.getElementById("siteTitle").value =
-        localStorage.getItem("siteTitle") || "";
-
-    document.getElementById("siteDescription").value =
-        localStorage.getItem("siteDescription") || "";
-
-    loadVideos();
-};
+    }
 
 </script>
 
