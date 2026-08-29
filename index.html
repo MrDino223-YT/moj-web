@@ -1,192 +1,631 @@
 <!DOCTYPE html>
 <html lang="hr">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
     <title>Moj Web - Roblox & Gaming</title>
 
+
     <style>
+
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
 
+
         body {
+
             font-family: Arial, sans-serif;
+
             background: #0f0f12;
+
             color: white;
+
         }
+
 
         header {
+
             background: #18181d;
+
             padding: 25px;
+
             text-align: center;
+
             border-bottom: 2px solid #292930;
+
         }
+
 
         header h1 {
+
             font-size: 36px;
+
             margin-bottom: 8px;
+
         }
+
 
         header p {
+
             color: #aaa;
+
         }
+
 
         .container {
+
             max-width: 1100px;
+
             margin: auto;
+
             padding: 30px 20px;
+
         }
+
 
         .welcome {
+
             text-align: center;
+
             margin-bottom: 35px;
+
         }
+
 
         .welcome h2 {
+
             font-size: 28px;
+
             margin-bottom: 10px;
+
         }
+
 
         .welcome p {
+
             color: #aaa;
+
         }
+
 
         .videos {
+
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+
+            grid-template-columns:
+                repeat(
+                    auto-fit,
+                    minmax(280px, 1fr)
+                );
+
             gap: 22px;
+
         }
+
 
         .video-card {
+
             background: #19191f;
+
             border: 1px solid #292930;
+
             border-radius: 15px;
+
             overflow: hidden;
+
             transition: 0.2s;
+
         }
+
 
         .video-card:hover {
+
             transform: translateY(-5px);
+
             border-color: #555;
+
         }
+
 
         .thumbnail {
+
             width: 100%;
+
             height: 170px;
+
             object-fit: cover;
+
             background: #25252c;
+
         }
+
+
+        .no-thumbnail {
+
+            width: 100%;
+
+            height: 170px;
+
+            background: #25252c;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 50px;
+
+        }
+
 
         .video-content {
+
             padding: 18px;
+
         }
+
 
         .video-content h3 {
+
             margin-bottom: 8px;
+
             font-size: 20px;
+
         }
+
 
         .video-content p {
+
             color: #aaa;
+
             margin-bottom: 15px;
+
             line-height: 1.5;
+
         }
+
 
         .button {
+
             display: inline-block;
+
             padding: 11px 18px;
+
             background: #ff3333;
+
             color: white;
+
             text-decoration: none;
+
             border-radius: 8px;
+
             font-weight: bold;
+
         }
+
 
         .button:hover {
+
             background: #e52222;
+
         }
 
-        footer {
+
+        .loading {
+
             text-align: center;
-            padding: 30px;
-            margin-top: 50px;
-            background: #18181d;
-            color: #777;
+
+            color: #aaa;
+
+            padding: 40px;
+
         }
+
+
+        footer {
+
+            text-align: center;
+
+            padding: 30px;
+
+            margin-top: 50px;
+
+            background: #18181d;
+
+            color: #777;
+
+        }
+
     </style>
+
 </head>
+
 
 <body>
 
+
 <header>
-    <h1>🎮 Moj Web</h1>
-    <p>Roblox, gaming i još mnogo toga!</p>
+
+    <h1 id="siteTitle">
+        🎮 Moj Web
+    </h1>
+
+    <p id="siteDescription">
+        Roblox gaming i još mnogo toga!
+    </p>
+
 </header>
+
 
 <div class="container">
 
+
     <div class="welcome">
-        <h2>Moji videi</h2>
-        <p>Ovdje možeš pronaći moje Roblox tutoriale, gameplay videe i još puno toga.</p>
+
+        <h2>
+            Moji videi
+        </h2>
+
+        <p>
+            Ovdje možeš pronaći moje Roblox tutoriale,
+            gameplay videe i još puno toga.
+        </p>
+
     </div>
 
-    <div class="videos">
 
-        <!-- VIDEO 1 -->
-        <div class="video-card">
+    <div
+        class="videos"
+        id="videos">
 
-            <!-- Ovdje kasnije stavljamo pravi thumbnail -->
-            <div class="thumbnail"></div>
-
-            <div class="video-content">
-                <h3>🔧 Roblox Studio Tutorial</h3>
-
-                <p>
-                    Tutorial za izradu Roblox igre i skripti.
-                </p>
-
-                <a
-                    class="button"
-                    href="https://www.youtube.com/"
-                    target="_blank">
-                    ▶ Gledaj na YouTubeu
-                </a>
-            </div>
-
-        </div>
-
-        <!-- VIDEO 2 -->
-        <div class="video-card">
-
-            <div class="thumbnail"></div>
-
-            <div class="video-content">
-                <h3>🎮 Moj Roblox Gameplay</h3>
-
-                <p>
-                    Pogledaj moj novi Roblox gameplay video.
-                </p>
-
-                <a
-                    class="button"
-                    href="https://www.youtube.com/"
-                    target="_blank">
-                    ▶ Gledaj na YouTubeu
-                </a>
-            </div>
-
+        <div class="loading">
+            Učitavanje videa...
         </div>
 
     </div>
+
 
 </div>
 
+
 <footer>
+
     © 2026 Moj Web • Napravio ja 😎
+
 </footer>
 
+
+
+<script type="module">
+
+
+    // ==========================================
+    // FIREBASE
+    // ==========================================
+
+    import {
+        initializeApp
+    }
+    from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+
+
+    import {
+        getFirestore,
+        doc,
+        getDoc,
+        collection,
+        onSnapshot
+    }
+    from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+
+
+    const firebaseConfig = {
+
+        apiKey:
+            "AIzaSyAP2yePMtk2SlQju1cHGc3jhMiq42Mzxdo",
+
+        authDomain:
+            "moj-web-ec4c7.firebaseapp.com",
+
+        projectId:
+            "moj-web-ec4c7",
+
+        storageBucket:
+            "moj-web-ec4c7.firebasestorage.app",
+
+        messagingSenderId:
+            "341511464392",
+
+        appId:
+            "1:341511464392:web:4aa2988f8aa61f257c8cfd"
+
+    };
+
+
+    const app =
+        initializeApp(firebaseConfig);
+
+
+    const db =
+        getFirestore(app);
+
+
+
+    // ==========================================
+    // LOAD WEBSITE SETTINGS
+    // ==========================================
+
+    async function loadSettings() {
+
+        try {
+
+            const settingsDoc =
+                await getDoc(
+                    doc(
+                        db,
+                        "settings",
+                        "website"
+                    )
+                );
+
+
+            if (settingsDoc.exists()) {
+
+                const data =
+                    settingsDoc.data();
+
+
+                document.getElementById(
+                    "siteTitle"
+                ).textContent =
+                    "🎮 " + (
+                        data.title ||
+                        "Moj Web"
+                    );
+
+
+                document.getElementById(
+                    "siteDescription"
+                ).textContent =
+                    data.description ||
+                    "Roblox gaming i još mnogo toga!";
+
+            }
+
+        } catch (error) {
+
+            console.error(
+                "Greška pri učitavanju postavki:",
+                error
+            );
+
+        }
+
+    }
+
+
+
+    // ==========================================
+    // LOAD VIDEOS
+    // ==========================================
+
+    function loadVideos() {
+
+        const videosElement =
+            document.getElementById("videos");
+
+
+        onSnapshot(
+
+            collection(
+                db,
+                "videos"
+            ),
+
+            function(snapshot) {
+
+                videosElement.innerHTML = "";
+
+
+                if (snapshot.empty) {
+
+                    videosElement.innerHTML = `
+
+                        <div class="loading">
+
+                            Još nema objavljenih videa. 🎬
+
+                        </div>
+
+                    `;
+
+                    return;
+
+                }
+
+
+                snapshot.forEach(
+                    function(videoDoc) {
+
+                        const video =
+                            videoDoc.data();
+
+
+                        const card =
+                            document.createElement(
+                                "div"
+                            );
+
+
+                        card.className =
+                            "video-card";
+
+
+                        const title =
+                            escapeHtml(
+                                video.title || ""
+                            );
+
+
+                        const description =
+                            escapeHtml(
+                                video.description || ""
+                            );
+
+
+                        const link =
+                            escapeAttribute(
+                                video.link || "#"
+                            );
+
+
+                        let thumbnailHTML = "";
+
+
+                        if (video.thumbnail) {
+
+                            thumbnailHTML = `
+
+                                <img
+                                    class="thumbnail"
+                                    src="${escapeAttribute(video.thumbnail)}"
+                                    alt="${title}"
+                                    loading="lazy">
+
+                            `;
+
+                        } else {
+
+                            thumbnailHTML = `
+
+                                <div class="no-thumbnail">
+
+                                    🎮
+
+                                </div>
+
+                            `;
+
+                        }
+
+
+                        card.innerHTML = `
+
+                            ${thumbnailHTML}
+
+                            <div class="video-content">
+
+                                <h3>
+                                    🎬 ${title}
+                                </h3>
+
+                                <p>
+                                    ${description}
+                                </p>
+
+                                <a
+                                    class="button"
+                                    href="${link}"
+                                    target="_blank"
+                                    rel="noopener noreferrer">
+
+                                    ▶ Gledaj na YouTubeu
+
+                                </a>
+
+                            </div>
+
+                        `;
+
+
+                        videosElement.appendChild(
+                            card
+                        );
+
+                    }
+                );
+
+            },
+
+            function(error) {
+
+                console.error(error);
+
+                videosElement.innerHTML = `
+
+                    <div class="loading">
+
+                        ❌ Greška pri učitavanju videa.
+
+                    </div>
+
+                `;
+
+            }
+
+        );
+
+    }
+
+
+
+    // ==========================================
+    // SECURITY
+    // ==========================================
+
+    function escapeHtml(text) {
+
+        const div =
+            document.createElement("div");
+
+        div.textContent =
+            text;
+
+        return div.innerHTML;
+
+    }
+
+
+    function escapeAttribute(text) {
+
+        return String(text)
+
+            .replace(/&/g, "&amp;")
+
+            .replace(/"/g, "&quot;")
+
+            .replace(/'/g, "&#039;")
+
+            .replace(/</g, "&lt;")
+
+            .replace(/>/g, "&gt;");
+
+    }
+
+
+
+    // ==========================================
+    // START
+    // ==========================================
+
+    loadSettings();
+
+    loadVideos();
+
+
+</script>
+
+
 </body>
+
 </html>
