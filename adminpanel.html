@@ -160,6 +160,24 @@
             margin-bottom: 25px;
         }
 
+        .thumbnail-preview {
+            display: none;
+            width: 100%;
+            max-width: 400px;
+            max-height: 220px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-top: 5px;
+            margin-bottom: 18px;
+            border: 1px solid #33333b;
+        }
+
+        .file-name {
+            color: #aaa;
+            margin-top: -8px;
+            margin-bottom: 18px;
+        }
+
         footer {
             text-align: center;
             padding: 30px;
@@ -181,12 +199,14 @@
         <p>Prijavi se u svoj Moj Web admin panel.</p>
 
         <label>Email</label>
+
         <input
             type="email"
             id="email"
             placeholder="Tvoj email">
 
         <label>Lozinka</label>
+
         <input
             type="password"
             id="password"
@@ -223,9 +243,7 @@
 
 
     <div class="container">
-
-
-        <!-- SETTINGS -->
+                <!-- SETTINGS -->
 
         <div class="panel">
 
@@ -273,7 +291,24 @@
                 id="videoLink"
                 placeholder="https://www.youtube.com/watch?v=...">
 
-            <label>Thumbnail link</label>
+            <label>🖼️ Thumbnail</label>
+
+            <input
+                type="file"
+                id="thumbnailFile"
+                accept="image/png,image/jpeg,image/webp"
+                onchange="previewThumbnail()">
+
+            <div class="file-name" id="thumbnailFileName">
+                Nije odabrana slika
+            </div>
+
+            <img
+                id="thumbnailPreview"
+                class="thumbnail-preview"
+                alt="Thumbnail preview">
+
+            <label>Thumbnail URL</label>
 
             <input
                 type="text"
@@ -331,8 +366,6 @@
     </footer>
 
 </div>
-
-
 <!-- FIREBASE -->
 
 <script type="module">
@@ -447,7 +480,7 @@
     // AUTH STATE
     // ==========================================
 
-    onAuthStateChanged(auth, async function(user) {
+    onAuthStateChanged(auth, function(user) {
 
         const loginScreen =
             document.getElementById("loginScreen");
@@ -558,7 +591,65 @@
 
             console.error(error);
         }
-    }
+    };
+
+
+    // ==========================================
+    // THUMBNAIL PREVIEW
+    // ==========================================
+
+    window.previewThumbnail = function() {
+
+        const fileInput =
+            document.getElementById("thumbnailFile");
+
+        const preview =
+            document.getElementById("thumbnailPreview");
+
+        const fileName =
+            document.getElementById("thumbnailFileName");
+
+
+        if (!fileInput.files || !fileInput.files[0]) {
+
+            preview.style.display = "none";
+
+            fileName.textContent =
+                "Nije odabrana slika";
+
+            return;
+        }
+
+
+        const file =
+            fileInput.files[0];
+
+
+        if (!file.type.startsWith("image/")) {
+
+            fileName.textContent =
+                "❌ Odaberi sliku!";
+
+            preview.style.display = "none";
+
+            return;
+        }
+
+
+        fileName.textContent =
+            "📁 " + file.name;
+
+
+        const imageURL =
+            URL.createObjectURL(file);
+
+
+        preview.src =
+            imageURL;
+
+        preview.style.display =
+            "block";
+    };
 
 
     // ==========================================
@@ -629,9 +720,7 @@
         }
 
     };
-
-
-    // ==========================================
+        // ==========================================
     // CLEAR FORM
     // ==========================================
 
@@ -649,6 +738,15 @@
 
         document.getElementById("videoSteps").value = "";
 
+        document.getElementById("thumbnailFile").value = "";
+
+        document.getElementById("thumbnailFileName").textContent =
+            "Nije odabrana slika";
+
+        document.getElementById("thumbnailPreview").style.display =
+            "none";
+
+        document.getElementById("thumbnailPreview").src = "";
     };
 
 
@@ -719,6 +817,13 @@
 
                 });
 
+            },
+            function(error) {
+
+                console.error(error);
+
+                list.innerHTML =
+                    "<p>❌ Greška pri učitavanju videa.</p>";
             }
         );
 
@@ -743,6 +848,8 @@
             );
 
         } catch (error) {
+
+            console.error(error);
 
             alert(
                 "Greška: " + error.message
